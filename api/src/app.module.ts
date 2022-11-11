@@ -8,6 +8,8 @@ import ParticipantService from './services/participant.service';
 import MessageController from './controllers/message.controller';
 import MediaService from './services/media.service';
 import MediaController from './controllers/media.controller';
+import ConfigurationController from './controllers/configuration.controller';
+import ConfigurationService from './services/configuration.service';
 
 @Module({
   imports: [
@@ -17,6 +19,7 @@ import MediaController from './controllers/media.controller';
   ],
   controllers: [
     ConversationController,
+    ConfigurationController,
     ParticipantController,
     MessageController,
     MediaController,
@@ -24,6 +27,7 @@ import MediaController from './controllers/media.controller';
   providers: [
     ConfigService,
     ConversationService,
+    ConfigurationService,
     MessageService,
     ParticipantService,
     MessageService,

@@ -46,4 +46,15 @@ export default class ParticipantController {
       deleteParticipantDto,
     );
   }
+
+  @Get('/token/:chatServiceId/:identity')
+  async generateTokenByIdentity(
+    @Param('chatServiceId') chatServiceId: string,
+    @Param('identity') identity: string,
+  ): Promise<GenerateTokenDTO> {
+    return await this.participantService.generateTokenByIdentity(
+      chatServiceId,
+      identity,
+    );
+  }
 }

@@ -75,4 +75,26 @@ export default class ParticipantService {
       .conversations(`${conversationId}`)
       .participants.list();
   };
+
+  public generateTokenByIdentity = async (
+    chatServiceId: string,
+    identity: string,
+  ): Promise<GenerateTokenDTO> => {
+    const chatGrant = new ChatGrant({
+      serviceSid: chatServiceId,
+    });
+
+    const token = new AccessToken(
+      process.env.SERVICE_TWILIO_ACCOUNT_SID,
+      process.env.SERVICE_TWILIO_API_KEY,
+      process.env.SERVICE_TWILIO_API_KEY_SECRET,
+      {
+        identity: identity,
+      },
+    );
+
+    token.addGrant(chatGrant);
+
+    return { token: token.toJwt() };
+  };
 }
