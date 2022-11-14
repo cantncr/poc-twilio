@@ -53,6 +53,10 @@ async function handleParticipantsUpdate(
   updateParticipants: SetParticipantsType
 ) {
   const result = await getConversationParticipants(participant.conversation);
+  result.map(async (a) => {
+    const user = await a.getUser();
+    localStorage.setItem(user.identity, user.isOnline ? "Online" : "Offline");
+  });
   updateParticipants(result, participant.conversation.sid);
 }
 
@@ -76,6 +80,7 @@ const AppContainer: React.FC = () => {
   const token = useSelector((state: AppState) => state.token);
   const conversations = useSelector((state: AppState) => state.convos);
   const sid = useSelector((state: AppState) => state.sid);
+  const participants = useSelector((state: AppState) => state.participants);
   const sidRef = useRef("");
   const [alertsExist, AlertsView] = useAppAlert();
   sidRef.current = sid;
@@ -174,7 +179,6 @@ const AppContainer: React.FC = () => {
       if (message.author === localStorage.getItem("username")) {
         clearAttachments(message.conversation.sid, "-1");
       }
-
     });
     client.on("participantLeft", (participant) => {
       handlePromiseRejection(
@@ -196,6 +200,11 @@ const AppContainer: React.FC = () => {
     });
     client.on("conversationUpdated", ({ conversation }) => {
       handlePromiseRejection(() => {}, addNotifications);
+    });
+
+    client.on("userUpdated", ({ user, updateReasons }) => {
+      console.log("userupdated", user);
+      localStorage.setItem(user.identity, user.isOnline ? "Online" : "Offline");
     });
 
     client.on("messageUpdated", ({ message }) => {
