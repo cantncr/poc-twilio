@@ -100,6 +100,7 @@ const ManageParticipantsModal: React.FC<ManageParticipantsModalProps> = (
                   <Tr>
                     <Th width="size10" style={{ width: "50px" }} />
                     <Th width="size40" textAlign="left" />
+                    <Th width="size40" textAlign="left" />
                     <Th textAlign="right" />
                   </Tr>
                 </THead>
@@ -128,6 +129,15 @@ const ManageParticipantsModal: React.FC<ManageParticipantsModalProps> = (
                                 // @ts-ignore
                                 (user.attributes["friendlyName"] as string) ??
                                 "unknown"}
+                          </Text>
+                        </Td>
+                        <Td textAlign="left">
+                          <Text as="span" textAlign="left">
+                            {
+                              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                              // @ts-ignore
+                              localStorage.getItem(user.identity)
+                            }
                           </Text>
                         </Td>
                         <Td textAlign="right">

@@ -47,6 +47,10 @@ async function updateCurrentConvo(
     const participants = await getSdkConversationObject(
       convo
     ).getParticipants();
+    participants.map(async (a) => {
+      const user = await a.getUser();
+      localStorage.setItem(user.identity, user.isOnline ? "Online" : "Offline");
+    });
     updateParticipants(participants, convo.sid);
   } catch {
     return Promise.reject(UNEXPECTED_ERROR_MESSAGE);

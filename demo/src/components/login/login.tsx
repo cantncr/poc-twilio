@@ -22,7 +22,7 @@ async function login(
   setToken: (token: string) => void
 ): Promise<string> {
   try {
-    const token = await getToken(username.trim(), password);
+    const token = await getToken(password, username.trim());
     if (token === "") {
       return "Something went wrong.";
     }
